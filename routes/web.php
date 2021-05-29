@@ -27,6 +27,6 @@ Route::group([
     'middleware'=>['auth','isAdmin'],
     'prefix'=>'admin'
 ],function(){
+    Route::get('tasks/{id}',[TaskController::class,'destroy'])->whereNumber('id')->name('tasks.destroy');
    Route::resource('tasks', TaskController::class);
 });
-Route::get('finish/{$id}', [TaskController::class,'finish'])->name('finish');

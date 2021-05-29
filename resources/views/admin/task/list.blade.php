@@ -35,7 +35,7 @@
                     <td>{{$task->prerequisites}}</td>
                     <td>
                         <a href="{{route('tasks.edit',$task->id)}}" class="btn btn-sm btn-{{ $task->task_status === "Progress"?'success':'warning'}}" @if($task->task_status == "Finished") style="display: none" @endif>{{ $task->task_status === "Progress"?'Görevi Bitir':'Göreve Başla'}}</a>
-                        <a href="" class="btn btn-sm btn-danger"><i class="fa fa-erase"></i>Görevi Sil</a>
+                        <a href="{{route('tasks.destroy',$task->id)}}" class="btn btn-sm btn-danger">Görevi Sil</a>
                     </td>
                   </tr>
                   @php
