@@ -12,6 +12,8 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="css/example-styles.css">
+        <link rel="stylesheet" type="text/css" href="css/demo-styles.css">
 
         @livewireStyles
 

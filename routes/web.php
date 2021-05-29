@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TaskController;
+use App\Models\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,4 @@ Route::group([
 ],function(){
    Route::resource('tasks', TaskController::class);
 });
+Route::get('finish/{$id}', [TaskController::class,'finish'])->name('finish');

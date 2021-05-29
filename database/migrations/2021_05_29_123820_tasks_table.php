@@ -18,7 +18,7 @@ class TasksTable extends Migration
             $table->id();
             $table->string('task_name');
             $table->enum('task_type', ['invoice_ops', 'custom_ops','common_ops'])->default('custom_ops');
-            $table->string('prerequisites')->nullable();
+            $table->string('prerequisites')->default('none');
             $table->string('amount')->nullable();
             $table->string('country')->nullable();
             $table->enum('task_status', ['Not Progress', 'Progress','Finished'])->nullable()->default('Not Progress');
