@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Http\Requests\TaskCreateRequest;
 
 use function PHPSTORM_META\type;
 
@@ -38,16 +39,22 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Task $task)
+    public function store(TaskCreateRequest $request,Task $task)
     {
-        $request->prerequisites = implode(", ",$request->prerequisites); //ARRAY TO STRİNG
-
+         //ARRAY TO STRİNG
+        if($request->task_type=='custom_ops'){
+            $task->country= $request->country;
+        }
+        else if($request->task_type=='invoice_ops'){
+            $task->amount=$request->currency.$request->quantity;
+        }
         $task->task_name=$request->task_name;
         $task->task_type=$request->task_type;
+        $request->prerequisites = implode(", ",$request->prerequisites);
         $task->prerequisites=$request->prerequisites;
 
         $task->save();
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->withSuccess('Task saved.');
 
 
     }
@@ -74,10 +81,11 @@ class TaskController extends Controller
         $task=Task::find($id) ?? abort(404,'Task Not Found');
         $prereq=explode(", ",$task->prerequisites);
         $durum="false";
+        $errors="";
 
         if($task->task_status=="Progress"){
             $task->update(['task_status'=>'Finished']);
-            return redirect()->route('tasks.index');
+            return redirect()->route('tasks.index')->withSuccess('Task Finished.');
         }
         else{
 
@@ -94,7 +102,7 @@ class TaskController extends Controller
                 if($tasks->task_status != "Finished")
                 {
                     $durum="false";
-
+                    $errors="You must finished ".$tasks->task_name." Task";
                     break;
                 }
                 else{
@@ -104,11 +112,11 @@ class TaskController extends Controller
             }
             if($durum=="true"){
                 $task->update(['task_status'=>'Progress']);
-                return redirect()->route('tasks.index');
+                return redirect()->route('tasks.index')->withSuccess('Task started.');
             }
             else
             {
-                return redirect()->route('tasks.index');
+                return redirect()->route('tasks.index')->withErrors($errors);
             }
 
         }

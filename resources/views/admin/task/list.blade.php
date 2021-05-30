@@ -2,6 +2,7 @@
     <x-slot name="header">
         Tasks
     </x-slot>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"><a href="{{route('tasks.create')}}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i>  Create Task</a></h5>
@@ -9,7 +10,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Task Name</th>
                     <th scope="col">Task Type</th>
                     <th scope="col">Task Status</th>

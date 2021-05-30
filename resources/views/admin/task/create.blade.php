@@ -21,6 +21,27 @@
                             <option value="invoice_ops">İnvoice Ops</option>
                         </select>
                     </div>
+                    <div id="quantitydiv" style="display:none" class="form-group col-md-4 pt-4">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" class="form-control" id="quantity" placeholder="1000">
+                    </div>
+                    <div id="currencydiv" style="display:none" class="form-group col-md-4 pt-4">
+                        <label for="currency">Currency</label>
+                        <select name="currency" id="currency">
+                            <option value="₺">₺</option>
+                            <option value="£">£</option>
+                            <option value="$">$</option>
+                            <option value="€">€</option>
+                        </select>
+                    </div>
+                    <div id="countrydiv" style="display:none" class="form-group col-md-4 pt-4">
+                        <label for="country">Country</label>
+                        <select name="country" id="country">
+                            <option value="TR">TR</option>
+                            <option value="DE">DE</option>
+                            <option value="EN">EN</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group col-md-4 pt-4">
                     <label for="prerequisites">Prequisites</label>
@@ -28,9 +49,9 @@
                         @php
                             $sayi=1;
                         @endphp
+                        <option value="none">Deselect</option>
                         @foreach ($tasks as $task)
-
-                        <option value="{{$task->id}}">{{$sayi}} - {{$task->task_name}}</option>
+                        <option value="{{$task->id}}">{{$task->id}} - {{$task->task_name}}</option>
                         @php
                             $sayi++;
                         @endphp
@@ -45,8 +66,37 @@
             </form>
         </div>
     </div>
+    <x-slot name="js">
+        <script>
+            $('#task_type').change(function(){
 
+                var select=document.getElementById("task_type");
+                var value=select.options[select.selectedIndex].value;
+                if(value=='custom_ops')
+                {
+                    $('#countrydiv').show();
+                    $('#currencydiv').hide();
+                    $('#quantity').required=false;
+                    $('#quantitydiv').hide();
+                }
+                else if(value=='invoice_ops')
+                {
+                    $('#currencydiv').show();
+                    $('#quantitydiv').show();
+                    $('#quantity').required=true;
+                    $('#countrydiv').hide();
+                }
+                else
+                {
+                    $('#currencydiv').hide();
+                    $('#quantitydiv').hide();
+                    $('#quantity').required=false;
+                    $('#countrydiv').hide();
+                }
+
+            })
+
+        </script>
+    </x-slot>
 </x-app-layout>
-<script>
-    $('#prequisites').multiSelect();
-</script>
+
