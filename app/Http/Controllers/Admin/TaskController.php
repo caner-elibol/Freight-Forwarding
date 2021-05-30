@@ -21,7 +21,6 @@ class TaskController extends Controller
         $tasks=Task::orderBy('updated_at', 'desc')->paginate(20);
         return view('admin.task.list',compact('tasks'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +31,6 @@ class TaskController extends Controller
         $tasks=Task::get();
         return view('admin.task.create',compact('tasks'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,10 +53,7 @@ class TaskController extends Controller
 
         $task->save();
         return redirect()->route('tasks.index')->withSuccess('Task saved.');
-
-
     }
-
     /**
      * Display the specified resource.
      *
@@ -66,10 +61,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
+    {}
     /**
      * Show the form for editing the specified resource.
      *
@@ -92,9 +84,7 @@ class TaskController extends Controller
             foreach ($prereq as $task_id) {
                 if($task_id == "none"){
                     $durum="true";
-
                     break;
-
                 }
                 else{
                     $tasks=Task::find($task_id);
@@ -107,7 +97,6 @@ class TaskController extends Controller
                 }
                 else{
                     $durum="true";
-
                 }
             }
             if($durum=="true"){
@@ -118,12 +107,8 @@ class TaskController extends Controller
             {
                 return redirect()->route('tasks.index')->withErrors($errors);
             }
-
         }
-
-
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -133,10 +118,7 @@ class TaskController extends Controller
      */
     public function update($id)
     {
-
     }
-
-
     /**
      * Remove the specified resource from storage.
      *
